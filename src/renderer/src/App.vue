@@ -30,5 +30,6 @@ import SideBar from "./components/SideBar.vue";
   overflow: auto;
   padding: 20px;
   background: #f5f6fa;
+  color: #000; /* 显式设置文字颜色为黑色 */
 }
 </style>

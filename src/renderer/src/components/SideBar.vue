@@ -2,8 +2,14 @@
   <div class="sidebar">
     <!-- 头像区域 -->
     <div class="avatar-container">
-      <input ref="avatarInput" type="file" accept="image/*" hidden @change="handleAvatarChange" />
-      <img :src="avatarUrl" class="avatar" @click="(avatarInput as HTMLInputElement).click()" />
+      <input
+        ref="avatarInput"
+        type="file"
+        accept="image/*"
+        hidden
+        @change="handleAvatarChange"
+      />
+      <img :src="avatarUrl" class="avatar" @click="avatarInput?.click()" />
     </div>
 
     <!-- 菜单区域 -->
@@ -17,37 +23,52 @@
       </div>
       <div
         class="menu-item"
-        :class="{ active: activeMenu === 'assistant' }"
-        @click="navigateTo('/assistant')"
+        :class="{ active: activeMenu === 'agent' }"
+        @click="navigateTo('/agent')"
       >
         助手
       </div>
     </div>
 
     <!-- 设置按钮 -->
-    <div class="settings" @click="navigateTo('/settings')">设置</div>
+    <div
+      class="menu-item"
+      :class="{ active: activeMenu === 'settings' }"
+      @click="navigateTo('/settings')"
+    >
+      设置
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-const avatarUrl = ref('/default-avatar.png')
-const activeMenu = ref('chat')
+const router = useRouter();
+const avatarUrl = ref("/default-avatar.png");
+const activeMenu = ref("chat");
+const avatarInput = ref<HTMLInputElement | null>(null);
 
-const handleAvatarChange = (event: Event): void => {
-  const input = event.target as HTMLInputElement
+const handleAvatarChange = async (event: Event): Promise<void> => {
+  const input = event.target as HTMLInputElement;
   if (input.files?.[0]) {
-    const file = input.files[0]
-    avatarUrl.value = URL.createObjectURL(file)
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (): void => {
+      const result = reader.result as string;
+      avatarUrl.value = result; // 将文件内容作为头像 URL
+    };
+
+    reader.readAsDataURL(file); // 将文件读取为 Base64 URL
   }
-}
+};
 
 const navigateTo = (path: string): void => {
-  router.push(path)
-}
+  activeMenu.value = path.replace("/", ""); // 更新当前活动菜单
+  router.push(path);
+};
 </script>
 
 <style scoped>
