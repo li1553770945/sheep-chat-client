@@ -1,34 +1,31 @@
 <template>
-  <div class="settings">
-    <h2>数据配置管理</h2>
-    <div>
-      <label>数据文件夹路径:</label>
-      <input v-model="dataFolderPath" readonly />
-      <button @click="selectFolder">选择文件夹</button>
-    </div>
-  </div>
+  <el-tabs v-model="activeTab">
+    <el-tab-pane label="普通设置" name="general">
+      <GeneralSettings />
+    </el-tab-pane>
+    <el-tab-pane label="供应商与模型设置" name="supply">
+      <SupplySettings />
+    </el-tab-pane>
+    <el-tab-pane label="同步设置" name="sync">
+      <SyncSettings />
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted } from 'vue'
+import { useSettingsStore } from '@renderer/stores/settingsStore'
+import GeneralSettings from '@renderer/components/settings/GeneralSettings.vue'
+import SupplySettings from '@renderer/components/settings/SupplySettings.vue'
+import SyncSettings from '@renderer/components/settings/SyncSettings.vue'
 
-const dataFolderPath = ref("");
+const settingsStore = useSettingsStore()
+const { loadSettings } = settingsStore // 从 store 中获取 isSettingsLoaded
+const activeTab = ref('general')
 
 onMounted(async () => {
-  const config = await window.electron.ipcRenderer.invoke("get-config");
-  dataFolderPath.value = config.dataFolderPath;
-});
-
-const selectFolder = async (): Promise<void> => {
-  const result = await window.electron.ipcRenderer.invoke("select-folder");
-  if (result) {
-    dataFolderPath.value = result;
-    await window.electron.ipcRenderer.invoke(
-      "set-data-folder",
-      dataFolderPath.value,
-    );
-  }
-};
+  await loadSettings()
+})
 </script>
 
 <style scoped>
