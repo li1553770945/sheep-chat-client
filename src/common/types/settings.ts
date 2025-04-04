@@ -1,11 +1,11 @@
-export interface Supply {
+export interface Provider {
   name: string
   baseUrl: string
   models: string[]
 }
 
-export interface SupplySettings {
-  supplies: Supply[]
+export interface ProviderSettings {
+  providers: Provider[]
 }
 
 export interface GeneralSettings {
@@ -22,7 +22,7 @@ export interface SyncSettings {
 
 export interface Settings {
   generalSettings: GeneralSettings
-  supplySettings: SupplySettings
+  providerSettings: ProviderSettings
   syncSettings: SyncSettings
 }
 
@@ -31,8 +31,8 @@ export const defaultSettings: Settings = {
     language: 'zh-CN',
     userDataPath: '' // 用户数据路径，默认值为空字符串
   },
-  supplySettings: {
-    supplies: [
+  providerSettings: {
+    providers: [
       {
         name: 'OpenAI',
         baseUrl: 'https://api.openai.com/v1/chat/completions',

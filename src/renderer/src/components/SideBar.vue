@@ -38,9 +38,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import defaultAvatar from '@renderer/assets/default-avatar.svg' // 使用 import 引入默认头像
 
 const router = useRouter()
-const avatarUrl = ref('/default-avatar.png')
+const avatarUrl = ref(defaultAvatar) // 默认头像路径
 const activeMenu = ref('chat')
 const avatarInput = ref<HTMLInputElement | null>(null)
 

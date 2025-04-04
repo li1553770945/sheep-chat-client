@@ -3,8 +3,8 @@
     <el-tab-pane label="普通设置" name="general">
       <GeneralSettings />
     </el-tab-pane>
-    <el-tab-pane label="供应商与模型设置" name="supply">
-      <SupplySettings />
+    <el-tab-pane label="供应商与模型设置" name="provider">
+      <ProviderSettings />
     </el-tab-pane>
     <el-tab-pane label="同步设置" name="sync">
       <SyncSettings />
@@ -16,7 +16,7 @@
 import { ref, onMounted } from 'vue'
 import { useSettingsStore } from '@renderer/stores/settingsStore'
 import GeneralSettings from '@renderer/components/settings/GeneralSettings.vue'
-import SupplySettings from '@renderer/components/settings/SupplySettings.vue'
+import ProviderSettings from '@renderer/components/settings/ProviderSettings.vue'
 import SyncSettings from '@renderer/components/settings/SyncSettings.vue'
 
 const settingsStore = useSettingsStore()

@@ -4,7 +4,7 @@ import type { Settings } from '../../../common/types/settings'
 
 export const useSettingsStore = defineStore('settings', () => {
   const settings = reactive<Settings>({
-    supplySettings: { supplies: [] },
+    providerSettings: { providers: [] },
     generalSettings: {
       language: '',
       userDataPath: ''

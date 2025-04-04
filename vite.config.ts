@@ -17,5 +17,8 @@ export default defineConfig({
   define: {
     'process.env': {}, // 模拟 Node.js 的 process.env
     __dirname: JSON.stringify(__dirname) // 定义 __dirname
+  },
+  server: {
+    // 移除 Content-Security-Policy 配置
   }
 })

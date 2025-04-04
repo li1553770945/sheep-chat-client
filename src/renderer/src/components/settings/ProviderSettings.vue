@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-form :model="supplySettings" label-width="120px">
+    <el-form :model="providerSettings" label-width="120px">
       <el-form-item
-        v-for="(supply, index) in supplySettings.supplies"
+        v-for="(provider, index) in providerSettings.providers"
         :key="index"
         :label="'供应 ' + (index + 1)"
       >
-        <el-input v-model="supply.name" placeholder="供应名称"></el-input>
-        <el-input v-model="supply.baseUrl" placeholder="基础 URL"></el-input>
+        <el-input v-model="provider.name" placeholder="供应名称"></el-input>
+        <el-input v-model="provider.baseUrl" placeholder="基础 URL"></el-input>
         <el-tag
-          v-for="(model, idx) in supply.models"
+          v-for="(model, idx) in provider.models"
           :key="idx"
           closable
           @close="removeModel(index, idx)"
@@ -31,16 +31,16 @@ import { useSettingsStore } from '../../stores/settingsStore'
 import { ref, computed } from 'vue'
 
 const settingsStore = useSettingsStore()
-const supplySettings = computed(() => settingsStore.settings?.supplySettings)
+const providerSettings = computed(() => settingsStore.settings?.providerSettings)
 
 const newModel = ref('')
 const addModel = (index: number): void => {
   if (newModel.value.trim()) {
-    supplySettings[index].models.push(newModel.value.trim())
+    providerSettings[index].models.push(newModel.value.trim())
     newModel.value = ''
   }
 }
 const removeModel = (supplyIndex: number, modelIndex: number): void => {
-  supplySettings[supplyIndex].models.splice(modelIndex, 1)
+  providerSettings[supplyIndex].models.splice(modelIndex, 1)
 }
 </script>
