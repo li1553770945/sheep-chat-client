@@ -1,6 +1,7 @@
 export interface Provider {
   name: string
   baseUrl: string
+  apiKey: string
   models: string[]
 }
 
@@ -36,6 +37,7 @@ export const defaultSettings: Settings = {
       {
         name: 'OpenAI',
         baseUrl: 'https://api.openai.com/v1/chat/completions',
+        apiKey: '',
         models: ['gpt-3.5-turbo', 'gpt-4']
       }
     ]

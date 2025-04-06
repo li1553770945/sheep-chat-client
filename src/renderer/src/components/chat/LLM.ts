@@ -1,15 +1,26 @@
 import { OpenAI } from 'openai'
 import { useSelectModelStore } from '@renderer/stores/selectModelStore'
+import { watch, computed } from 'vue'
+
 const selectModelStore = useSelectModelStore()
-const selectedModel = selectModelStore.selectedModel
+const selectedModel = computed(() => selectModelStore.selectedModel)
 
 export class LLMService {
-  private client: OpenAI
+  private client: OpenAI | null
   constructor() {
-    this.client = new OpenAI({
-      baseURL: selectedModel.baseUrl,
-      apiKey: selectedModel.apiKey,
-      dangerouslyAllowBrowser: true
+    // this.client = new OpenAI({
+    //   baseURL: selectedModel?.baseUrl,
+    //   apiKey: selectedModel?.apiKey,
+    //   dangerouslyAllowBrowser: true
+    // })
+    this.client = null
+    watch(selectedModel, (newSelectedModel) => {
+      if (!newSelectedModel) return
+      this.client = new OpenAI({
+        baseURL: newSelectedModel.baseUrl,
+        apiKey: newSelectedModel.apiKey,
+        dangerouslyAllowBrowser: true
+      })
     })
   }
 
@@ -19,9 +30,13 @@ export class LLMService {
     onContent: (data: string) => void,
     onError?: (error: any) => void
   ): Promise<void> {
+    if (!this.client) {
+      console.error('LLM client is not initialized.')
+      return
+    }
     try {
       const response = await this.client.chat.completions.create({
-        model: selectedModel.modelName, // 替换为实际模型名称
+        model: selectedModel.value.modelName, // 替换为实际模型名称
         messages: messages,
         stream: true
       })

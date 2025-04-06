@@ -31,8 +31,7 @@ export const useSettingsStore = defineStore('settings', () => {
     if (Object.keys(settings).length > 0) {
       const clonedSettings = JSON.parse(JSON.stringify(settings)) // 深拷贝对象
       await window.electron.ipcRenderer.invoke('save-settings', clonedSettings)
-      console.log('Settings saved:', settings)
-      // alert('设置已保存') // 如果必须使用 alert
+      console.log('设置已保存')
     }
   }
 

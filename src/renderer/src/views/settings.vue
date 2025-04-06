@@ -13,19 +13,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useSettingsStore } from '@renderer/stores/settingsStore'
+import { ref } from 'vue'
 import GeneralSettings from '@renderer/components/settings/GeneralSettings.vue'
 import ProviderSettings from '@renderer/components/settings/ProviderSettings.vue'
 import SyncSettings from '@renderer/components/settings/SyncSettings.vue'
 
-const settingsStore = useSettingsStore()
-const { loadSettings } = settingsStore // 从 store 中获取 isSettingsLoaded
 const activeTab = ref('general')
-
-onMounted(async () => {
-  await loadSettings()
-})
 </script>
 
 <style scoped>

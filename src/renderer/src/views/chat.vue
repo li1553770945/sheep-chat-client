@@ -6,7 +6,7 @@
           <ChatList />
         </el-tab-pane>
         <el-tab-pane label="模型设置" name="model-setting">
-          <ModelSetting />
+          <!-- <ModelSetting /> -->
         </el-tab-pane>
       </el-tabs>
     </el-aside>
@@ -25,6 +25,7 @@ import ChatInput from '../components/chat/ChatInput.vue'
 import ModelSetting from '../components/chat/ModelSetting.vue'
 
 const activeTab = ref('chat-list')
+
 </script>
 
 <style scoped>
